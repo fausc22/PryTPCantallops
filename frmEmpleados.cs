@@ -32,8 +32,19 @@ namespace PryTPCantallops
         private void tvEmpleados_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
         {
             string codEmpleado = e.Node.Text;
+            rtbInfo.Visible = true;
+            lblinfo.Visible = true;
+            rtbInfo.Clear();
+            objBD.MostrarDatosPersonales(codEmpleado, rtbInfo);
+            objBD.MostrarDatosLaborales(codEmpleado, rtbInfo);
+            objBD.MostrarDatosAcademicos(codEmpleado, rtbInfo);
 
-            objBD.MostrarDatos(codEmpleado, rtbInfo);
+            
+        }
+
+        private void tvEmpleados_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+
         }
     }
 }

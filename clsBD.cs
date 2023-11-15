@@ -68,7 +68,7 @@ namespace PryTPCantallops
             }
         }
 
-        public void MostrarDatos(string empleado, RichTextBox rtb)
+        public void MostrarDatosPersonales(string empleado, RichTextBox rtb)
         {
             try
             {
@@ -78,18 +78,79 @@ namespace PryTPCantallops
                 cmd.Connection = con;
                 cmd.CommandType = System.Data.CommandType.Text;
                 cmd.CommandText = "SELECT * FROM [DATOS PERSONALES] WHERE CODIGO = @codigo";
-                cmd.Parameters.AddWithValue("@codigo", empleado);
+                cmd.Parameters.AddWithValue("@codigo", empleado);              
                 rdr = cmd.ExecuteReader();
 
                 while (rdr.Read())
                 {
                     
-                    rtb.Text += $"Nombre: {rdr["NOMBRE"]}\n" +
+                    rtb.Text += "DATOS PERSONALES\n\n" +
+                                $"Nombre: {rdr["NOMBRE"]}\n" +
                                 $"Apellido: {rdr["APELLIDO"]}\n" +
                                 $"Dirección: {rdr["DIRECCIÒN"]}\n" +
                                 $"Ciudad: {rdr["CIUDAD"]}\n" +
                                 $"Teléfono: {rdr["TELEFONO"]}\n" +
                                 $"Fecha de Nacimiento: {rdr["FECHA_NACIMIENTO"]}\n\n";
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al cargar datos: " + ex.Message);
+            }
+        }
+
+        public void MostrarDatosLaborales(string empleado, RichTextBox rtb)
+        {
+            try
+            {
+                OleDbConnection con = new OleDbConnection(cadenaConexion);
+                con.Open();
+                cmd = new OleDbCommand();
+                cmd.Connection = con;
+                cmd.CommandType = System.Data.CommandType.Text;
+                cmd.CommandText = "SELECT * FROM [DATOS LABORALES] WHERE CODIGO = @codigo";
+                cmd.Parameters.AddWithValue("@codigo", empleado);
+                rdr = cmd.ExecuteReader();
+
+                while (rdr.Read())
+                {
+
+                    rtb.Text += "DATOS LABORALES\n\n" + 
+                                $"Años/Experiencia: {rdr["AÑOS/EXPERIENCIA"]}\n" +
+                                $"Ultimo lugar de trabajo: {rdr["ULTIMO LUGAR DE TRABAJO"]}\n" +
+                                $"Cargo desempeñado: {rdr["CARGO DESEMPENADO"]}\n" +
+                                $"Remuneracion: {rdr["REMUNERACION"]}\n\n";
+                                
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al cargar datos: " + ex.Message);
+            }
+        }
+
+
+        public void MostrarDatosAcademicos(string empleado, RichTextBox rtb)
+        {
+            try
+            {
+                OleDbConnection con = new OleDbConnection(cadenaConexion);
+                con.Open();
+                cmd = new OleDbCommand();
+                cmd.Connection = con;
+                cmd.CommandType = System.Data.CommandType.Text;
+                cmd.CommandText = "SELECT * FROM [DATOS ACADEMICOS] WHERE CODIGO = @codigo";
+                cmd.Parameters.AddWithValue("@codigo", empleado);
+                rdr = cmd.ExecuteReader();
+
+                while (rdr.Read())
+                {
+
+                    rtb.Text += "DATOS ACADEMICOS\n\n" + 
+                                $"Cursos que recibio: {rdr["CURSOS QUE RECIBIO"]}\n" +
+                                $"Horas/Estudio: {rdr["HORAS/ESTUDIO"]}\n" +
+                                $"Lugar de Estudio: {rdr["LUGAR DE ESTUDIO"]}\n\n";
+                                
                 }
             }
             catch (Exception ex)
